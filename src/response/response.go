@@ -28,3 +28,12 @@ func ConstructResponse(w http.ResponseWriter, status int, data interface{}, err 
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(response)
 }
+
+type StatisticsResponse struct {
+	Endpoints map[string]EndpointStatistics `json:"endpoints"`
+}
+
+type EndpointStatistics struct {
+	Count           int `json:"count"`
+	UniqueUserAgent int `json:"unique_user_agent"`
+}
