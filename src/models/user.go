@@ -7,7 +7,7 @@ import (
 type User struct {
 	ID        string    `gorm:"type:varchar(36);primaryKey"`
 	UserName  string    `gorm:"not null"`
-	Farms     []Farm    `gorm:"foreignKey:UserID"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoCreateTime"`
+	Farms     []Farm    `gorm:"-"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
 }

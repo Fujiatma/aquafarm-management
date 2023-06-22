@@ -7,16 +7,18 @@ import (
 )
 
 type FarmService interface {
-	CreateFarm(ctx context.Context, farm models.Farm) error
-	UpdateFarm(ctx context.Context, farm models.Farm) error
+	CreateFarm(ctx context.Context, farm *models.Farm) error
+	UpdateFarm(ctx context.Context, farm *models.Farm) (*models.Farm, error)
 	GetFarmByID(ctx context.Context, farmID string) (farm *models.Farm, err error)
-	GetAllFarms(ctx context.Context) (farms []models.Farm, err error)
+	GetAllFarmByUserID(ctx context.Context, userID string) (farms []*models.Farm, err error)
+	GetFarmByName(ctx context.Context, farmName string) (*models.Farm, error)
+	DeleteFarm(ctx context.Context, farm *models.Farm) error
 }
 
 type farmService struct {
 	farmRepository repositories.FarmRepository
 }
 
-func NewFarmsService(farmRepository repositories.FarmRepository) FarmService {
+func NewFarmService(farmRepository repositories.FarmRepository) FarmService {
 	return &farmService{farmRepository}
 }

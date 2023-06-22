@@ -8,7 +8,7 @@ type Pond struct {
 	FarmID    string
 	IsDeleted bool      `gorm:"column:is_deleted"`
 	Farm      Farm      `gorm:"foreignKey:FarmID"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoCreateTime"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
 	DeletedAt time.Time
 }

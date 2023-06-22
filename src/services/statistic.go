@@ -8,8 +8,8 @@ import (
 )
 
 type StatisticService interface {
-	IncreaseEndpointCount(ctx context.Context, endpoint string, userAgent string) error
-	GetStatistics(ctx context.Context) (map[string]models.Statistic, error)
+	CreateStatistic(ctx context.Context, payload *models.Statistic) error
+	GetStatistics(ctx context.Context) ([]*models.Statistic, error)
 }
 
 type statisticService struct {
