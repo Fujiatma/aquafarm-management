@@ -8,15 +8,21 @@ import (
 	"time"
 )
 
-type StatisticRepository struct {
+type StatisticRepository interface {
+	CreateStatistic(ctx context.Context, statistic models.Statistic) error
+	GetAllStatistics(ctx context.Context) ([]*models.Statistic, error)
+	UpsertStatistic(ctx context.Context, statistic *models.Statistic) error
+}
+
+type statisticRepository struct {
 	db *gorm.DB
 }
 
 func NewStatisticRepository(db *gorm.DB) StatisticRepository {
-	return StatisticRepository{db: db}
+	return &statisticRepository{db: db}
 }
 
-func (r *StatisticRepository) CreateStatistic(ctx context.Context, statistic models.Statistic) error {
+func (r *statisticRepository) CreateStatistic(ctx context.Context, statistic models.Statistic) error {
 	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(statistic).Error; err != nil {
 			return err
@@ -27,7 +33,7 @@ func (r *StatisticRepository) CreateStatistic(ctx context.Context, statistic mod
 	return err
 }
 
-func (r *StatisticRepository) GetAllStatistics(ctx context.Context) (statistics []*models.Statistic, err error) {
+func (r *statisticRepository) GetAllStatistics(ctx context.Context) (statistics []*models.Statistic, err error) {
 	err = r.db.WithContext(ctx).Find(&statistics).Error
 	if err != nil {
 		return nil, err
@@ -35,7 +41,7 @@ func (r *StatisticRepository) GetAllStatistics(ctx context.Context) (statistics 
 	return statistics, nil
 }
 
-func (r *StatisticRepository) UpsertStatistic(ctx context.Context, statistic *models.Statistic) error {
+func (r *statisticRepository) UpsertStatistic(ctx context.Context, statistic *models.Statistic) error {
 	var existingStatistic models.Statistic
 	result := r.db.WithContext(ctx).Where("endpoint = ? AND user_id = ?", statistic.Endpoint, statistic.UserID).First(&existingStatistic)
 	if result.Error != nil && !errors.Is(result.Error, gorm.ErrRecordNotFound) {
