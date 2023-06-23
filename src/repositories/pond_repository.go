@@ -79,8 +79,9 @@ func (r *pondRepository) GetPondByName(ctx context.Context, pondName string) (po
 }
 
 func (r *pondRepository) SoftDeletePond(ctx context.Context, pond *models.Pond) error {
+	now := time.Now()
 	pond.IsDeleted = true
-	pond.DeletedAt = time.Now()
+	pond.DeletedAt = &now
 
 	return r.db.WithContext(ctx).Save(pond).Error
 }

@@ -77,8 +77,9 @@ func (r *farmRepository) GetFarmByName(ctx context.Context, farmName string) (fa
 }
 
 func (r *farmRepository) SoftDeleteFarm(ctx context.Context, farm *models.Farm) error {
+	now := time.Now()
 	farm.IsDeleted = true
-	farm.DeletedAt = time.Now()
+	farm.DeletedAt = &now
 
 	return r.db.WithContext(ctx).Save(farm).Error
 }

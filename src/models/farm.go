@@ -10,5 +10,5 @@ type Farm struct {
 	Ponds     []*Pond   `gorm:"foreignKey:FarmID"`
 	CreatedAt time.Time `gorm:"column:created_at"`
 	UpdatedAt time.Time `gorm:"column:updated_at"`
-	DeletedAt time.Time
+	DeletedAt *time.Time
 }
