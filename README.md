@@ -84,3 +84,74 @@ This Project is handle the all requirements below:
 
 # Database Design and DDL
 - You can see the DB Design and the DDL from Folder /documentation
+
+# Sample CURL To Run the API
+```- Create User
+  curl --location --request POST 'http://localhost:8000/v1/aquafarm/user' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "your-name"
+  }'
+
+- Create Farm:
+curl --location --request POST 'http://localhost:8000/v1/aquafarm/farm' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "farm_name": "Farm Surabaya",
+    "user_id": "7335983b-b7a4-4473-bf21-401600c12f5b"
+  }'
+
+- Create Pond:
+curl --location --request POST 'http://localhost:8000/v1/aquafarm/pond' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "pond_name": "Pond Bandung 1",
+  "farm_id": "dfe1b9f8-4919-4353-a576-08c4664c7e4c",
+  "user_id": "804056c5-3bd2-47a7-a8de-aa9d713c09c1"
+}'
+
+- Update Farm:
+curl --location --request PUT 'http://localhost:8000/v1/aquafarm/farm/7b58e567-3b00-4e1f-b504-d8790aa65c32' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "farm_name": "Farm Bandung 2",
+  "user_id": "7335983b-b7a4-4473-bf21-401600c12f5b"
+}'
+
+- Update Pond:
+curl --location --request PUT 'http://localhost:8000/v1/aquafarm/pond/1ca67bb8-8d9d-49c2-bd37-0eb28fe508a3' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "pond_name": "Pond Bandung Updated",
+  "farm_id": "dfe1b9f8-4919-4353-a576-08c4664c7e4c",
+  "user_id": "7335983b-b7a4-4473-bf21-401600c12f5b"
+}'
+
+- Delete Farm:
+curl --location --request DELETE 'http://localhost:8000/v1/aquafarm/farm/dfe1b9f8-4919-4353-a576-08c4664c7e4c' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "user_id": "7335983b-b7a4-4473-bf21-401600c12f5b"
+}'
+
+- Delete Pond:
+curl --location --request DELETE 'http://localhost:8000/v1/aquafarm/pond/1ca67bb8-8d9d-49c2-bd37-0eb28fe508a3' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "user_id": "7335983b-b7a4-4473-bf21-401600c12f5b"
+}'
+
+- Get All Farms:
+curl --location --request GET 'http://localhost:8000/v1/aquafarm/farms?user_id=7335983b-b7a4-4473-bf21-401600c12f5b'
+
+- Get All Ponds:
+curl --location --request GET 'http://localhost:8000/v1/aquafarm/ponds?user_id=7335983b-b7a4-4473-bf21-401600c12f5b'
+
+- Get Farm By ID:
+curl --location --request GET 'http://localhost:8000/v1/aquafarm/farm/7b58e567-3b00-4e1f-b504-d8790aa65c32?user_id=7335983b-b7a4-4473-bf21-401600c12f5b'
+
+- Get Pond By ID:
+curl --location --request GET 'http://localhost:8000/v1/aquafarm/pond/1ca67bb8-8d9d-49c2-bd37-0eb28fe508a3?user_id=7335983b-b7a4-4473-bf21-401600c12f5b'
+
+- Get All Statistics:
+curl --location --request GET 'http://localhost:8000/v1/aquafarm/statistics'
